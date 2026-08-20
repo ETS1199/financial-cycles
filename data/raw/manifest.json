@@ -1,0 +1,954 @@
+{
+  "countries": {
+    "Canada": {
+      "vintage": "2026-07-23T17:36:17+00:00",
+      "series": {
+        "real_gdp__NGDPRSAXDCCAQ.csv": {
+          "provider": "fred",
+          "rid": "NGDPRSAXDCCAQ",
+          "description": "Real GDP, Canada, SA, quarterly (index)",
+          "n_obs": 261,
+          "first_date": "1961-01-01",
+          "last_date": "2026-01-01"
+        },
+        "share_prices_nominal__SPASTT01CAQ661N.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01CAQ661N",
+          "description": "Share prices, Canada, quarterly index (nominal)",
+          "n_obs": 282,
+          "first_date": "1956-01-01",
+          "last_date": "2026-04-01"
+        },
+        "cpi_quarterly__CANCPIALLQINMEI.csv": {
+          "provider": "fred",
+          "rid": "CANCPIALLQINMEI",
+          "description": "CPI all items, Canada, quarterly index",
+          "n_obs": 445,
+          "first_date": "1914-01-01",
+          "last_date": "2025-01-01"
+        },
+        "cpi_monthly__CANCPIALLMINMEI.csv": {
+          "provider": "fred",
+          "rid": "CANCPIALLMINMEI",
+          "description": "CPI all items, Canada, monthly index",
+          "n_obs": 1335,
+          "first_date": "1914-01-01",
+          "last_date": "2025-03-01"
+        },
+        "total_credit_level__CRDQCAAPABIS.csv": {
+          "provider": "fred",
+          "rid": "CRDQCAAPABIS",
+          "description": "Total credit to private non-financial sector, Canada (level, break-adj.)",
+          "n_obs": 288,
+          "first_date": "1954-01-01",
+          "last_date": "2025-10-01"
+        },
+        "total_credit_pct_gdp__QCAPAM770A.csv": {
+          "provider": "fred",
+          "rid": "QCAPAM770A",
+          "description": "Total credit to private non-financial sector, % of GDP",
+          "n_obs": 281,
+          "first_date": "1955-10-01",
+          "last_date": "2025-10-01"
+        },
+        "bank_credit_pct_gdp__QCAPBM770A.csv": {
+          "provider": "fred",
+          "rid": "QCAPBM770A",
+          "description": "Bank credit to private non-financial sector, % of GDP",
+          "n_obs": 281,
+          "first_date": "1955-10-01",
+          "last_date": "2025-10-01"
+        },
+        "credit_to_gdp__QCACAM770A.csv": {
+          "provider": "fred",
+          "rid": "QCACAM770A",
+          "description": "Credit-to-GDP (BIS), Canada",
+          "n_obs": 144,
+          "first_date": "1990-01-01",
+          "last_date": "2025-10-01"
+        },
+        "real_residential_property__QCAR628BIS.csv": {
+          "provider": "fred",
+          "rid": "QCAR628BIS",
+          "description": "Real residential property prices, Canada, index",
+          "n_obs": 225,
+          "first_date": "1970-01-01",
+          "last_date": "2026-01-01"
+        },
+        "cpi_statcan__v41690973.csv": {
+          "provider": "statcan",
+          "rid": "41690973",
+          "description": "CPI all items, Canada, monthly, NSA, 2002=100 (StatCan v41690973)",
+          "n_obs": 1350,
+          "first_date": "1914-01-01",
+          "last_date": "2026-06-01"
+        },
+        "boc_output_gap_mpr__INDINF_OUTGAPMPR_Q.csv": {
+          "provider": "boc",
+          "rid": "INDINF_OUTGAPMPR_Q",
+          "description": "BoC output gap, Current MPR (%)",
+          "n_obs": 181,
+          "first_date": "1981-01-01",
+          "last_date": "2026-01-01"
+        },
+        "boc_output_gap_if__INDINF_OUTGAPI_Q.csv": {
+          "provider": "boc",
+          "rid": "INDINF_OUTGAPI_Q",
+          "description": "BoC output gap, Integrated Framework (%)",
+          "n_obs": 181,
+          "first_date": "1981-01-01",
+          "last_date": "2026-01-01"
+        },
+        "boc_output_gap_emvf__INDINF_OUTGAPM_Q.csv": {
+          "provider": "boc",
+          "rid": "INDINF_OUTGAPM_Q",
+          "description": "BoC output gap, Extended Multivariate Filter (%)",
+          "n_obs": 181,
+          "first_date": "1981-01-01",
+          "last_date": "2026-01-01"
+        }
+      }
+    },
+    "Australia": {
+      "vintage": "2026-08-12T15:37:28+00:00",
+      "series": {
+        "AU__real_gdp.csv": {
+          "provider": "fred",
+          "rid": "NGDPRSAXDCAUQ",
+          "description": "Real GDP, Australia, SA, quarterly (index)",
+          "n_obs": 267,
+          "first_date": "1959-07-01",
+          "last_date": "2026-01-01"
+        },
+        "AU__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01AUQ661N",
+          "description": "Share prices, Australia, quarterly index (nominal)",
+          "n_obs": 274,
+          "first_date": "1958-01-01",
+          "last_date": "2026-04-01"
+        },
+        "AU__cpi.csv": {
+          "provider": "abs",
+          "rid": "CPI/1.10001.10.50.Q",
+          "description": "All groups CPI, Australia, Index Numbers, Original, 8-capital wtd avg, Q (ABS)",
+          "n_obs": 312,
+          "first_date": "1948-07-01",
+          "last_date": "2026-04-01"
+        }
+      }
+    },
+    "United States": {
+      "vintage": "2026-08-12T19:36:15+00:00",
+      "series": {
+        "US__real_gdp.csv": {
+          "provider": "fred",
+          "rid": "NGDPRSAXDCUSQ",
+          "description": "Real GDP, US, SA, quarterly (index)",
+          "n_obs": 305,
+          "first_date": "1950-01-01",
+          "last_date": "2026-01-01"
+        },
+        "US__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01USQ661N",
+          "description": "Share prices, US, quarterly index (nominal)",
+          "n_obs": 278,
+          "first_date": "1957-01-01",
+          "last_date": "2026-04-01"
+        },
+        "US__cpi.csv": {
+          "provider": "fred",
+          "rid": "CPIAUCSL",
+          "description": "CPI-U all items, US, monthly, SA (BLS via FRED) \u2014 current, used as deflator",
+          "n_obs": 954,
+          "first_date": "1947-01-01",
+          "last_date": "2026-07-01"
+        }
+      }
+    },
+    "Germany": {
+      "vintage": "2026-08-12T21:04:07+00:00",
+      "series": {
+        "DE__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "DE",
+          "description": "Real GDP (chain-linked vol., SA), Germany, quarterly (Eurostat)",
+          "n_obs": 142,
+          "first_date": "1991-01-01",
+          "last_date": "2026-04-01"
+        },
+        "DE__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01DEQ661N",
+          "description": "Share prices, Germany, quarterly index (nominal, FRED)",
+          "n_obs": 266,
+          "first_date": "1960-01-01",
+          "last_date": "2026-04-01"
+        },
+        "DE__cpi.csv": {
+          "provider": "eu_hicp",
+          "rid": "DE",
+          "description": "HICP all-items, Germany, monthly index (Eurostat)",
+          "n_obs": 360,
+          "first_date": "1996-01-01",
+          "last_date": "2025-12-01"
+        }
+      }
+    },
+    "France": {
+      "vintage": "2026-08-12T21:04:07+00:00",
+      "series": {
+        "FR__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "FR",
+          "description": "Real GDP (chain-linked vol., SA), France, quarterly (Eurostat)",
+          "n_obs": 186,
+          "first_date": "1980-01-01",
+          "last_date": "2026-04-01"
+        },
+        "FR__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01FRQ661N",
+          "description": "Share prices, France, quarterly index (nominal, FRED)",
+          "n_obs": 286,
+          "first_date": "1955-01-01",
+          "last_date": "2026-04-01"
+        },
+        "FR__cpi.csv": {
+          "provider": "eu_hicp",
+          "rid": "FR",
+          "description": "HICP all-items, France, monthly index (Eurostat)",
+          "n_obs": 360,
+          "first_date": "1996-01-01",
+          "last_date": "2025-12-01"
+        }
+      }
+    },
+    "Austria": {
+      "vintage": "2026-08-12T21:04:07+00:00",
+      "series": {
+        "AT__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "AT",
+          "description": "Real GDP (chain-linked vol., SA), Austria, quarterly (Eurostat)",
+          "n_obs": 126,
+          "first_date": "1995-01-01",
+          "last_date": "2026-04-01"
+        },
+        "AT__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01ATQ661N",
+          "description": "Share prices, Austria, quarterly index (nominal, FRED)",
+          "n_obs": 278,
+          "first_date": "1957-01-01",
+          "last_date": "2026-04-01"
+        },
+        "AT__cpi.csv": {
+          "provider": "eu_hicp",
+          "rid": "AT",
+          "description": "HICP all-items, Austria, monthly index (Eurostat)",
+          "n_obs": 360,
+          "first_date": "1996-01-01",
+          "last_date": "2025-12-01"
+        }
+      }
+    },
+    "Belgium": {
+      "vintage": "2026-08-12T21:04:07+00:00",
+      "series": {
+        "BE__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "BE",
+          "description": "Real GDP (chain-linked vol., SA), Belgium, quarterly (Eurostat)",
+          "n_obs": 125,
+          "first_date": "1995-01-01",
+          "last_date": "2026-01-01"
+        },
+        "BE__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01BEQ661N",
+          "description": "Share prices, Belgium, quarterly index (nominal, FRED)",
+          "n_obs": 165,
+          "first_date": "1985-04-01",
+          "last_date": "2026-04-01"
+        },
+        "BE__cpi.csv": {
+          "provider": "eu_hicp",
+          "rid": "BE",
+          "description": "HICP all-items, Belgium, monthly index (Eurostat)",
+          "n_obs": 360,
+          "first_date": "1996-01-01",
+          "last_date": "2025-12-01"
+        }
+      }
+    },
+    "Czech Republic": {
+      "vintage": "2026-08-12T21:04:07+00:00",
+      "series": {
+        "CZ__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "CZ",
+          "description": "Real GDP (chain-linked vol., SA), Czech Republic, quarterly (Eurostat)",
+          "n_obs": 126,
+          "first_date": "1995-01-01",
+          "last_date": "2026-04-01"
+        },
+        "CZ__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01CZQ661N",
+          "description": "Share prices, Czech Republic, quarterly index (nominal, FRED)",
+          "n_obs": 130,
+          "first_date": "1994-01-01",
+          "last_date": "2026-04-01"
+        },
+        "CZ__cpi.csv": {
+          "provider": "eu_hicp",
+          "rid": "CZ",
+          "description": "HICP all-items, Czech Republic, monthly index (Eurostat)",
+          "n_obs": 360,
+          "first_date": "1996-01-01",
+          "last_date": "2025-12-01"
+        }
+      }
+    },
+    "Denmark": {
+      "vintage": "2026-08-12T21:04:07+00:00",
+      "series": {
+        "DK__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "DK",
+          "description": "Real GDP (chain-linked vol., SA), Denmark, quarterly (Eurostat)",
+          "n_obs": 125,
+          "first_date": "1995-01-01",
+          "last_date": "2026-01-01"
+        },
+        "DK__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01DKQ661N",
+          "description": "Share prices, Denmark, quarterly index (nominal, FRED)",
+          "n_obs": 174,
+          "first_date": "1983-01-01",
+          "last_date": "2026-04-01"
+        },
+        "DK__cpi.csv": {
+          "provider": "eu_hicp",
+          "rid": "DK",
+          "description": "HICP all-items, Denmark, monthly index (Eurostat)",
+          "n_obs": 360,
+          "first_date": "1996-01-01",
+          "last_date": "2025-12-01"
+        }
+      }
+    },
+    "Estonia": {
+      "vintage": "2026-08-12T21:04:07+00:00",
+      "series": {
+        "EE__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "EE",
+          "description": "Real GDP (chain-linked vol., SA), Estonia, quarterly (Eurostat)",
+          "n_obs": 126,
+          "first_date": "1995-01-01",
+          "last_date": "2026-04-01"
+        },
+        "EE__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01EEQ661N",
+          "description": "Share prices, Estonia, quarterly index (nominal, FRED)",
+          "n_obs": 120,
+          "first_date": "1996-07-01",
+          "last_date": "2026-04-01"
+        },
+        "EE__cpi.csv": {
+          "provider": "eu_hicp",
+          "rid": "EE",
+          "description": "HICP all-items, Estonia, monthly index (Eurostat)",
+          "n_obs": 360,
+          "first_date": "1996-01-01",
+          "last_date": "2025-12-01"
+        }
+      }
+    },
+    "Finland": {
+      "vintage": "2026-08-12T21:04:07+00:00",
+      "series": {
+        "FI__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "FI",
+          "description": "Real GDP (chain-linked vol., SA), Finland, quarterly (Eurostat)",
+          "n_obs": 146,
+          "first_date": "1990-01-01",
+          "last_date": "2026-04-01"
+        },
+        "FI__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01FIQ661N",
+          "description": "Share prices, Finland, quarterly index (nominal, FRED)",
+          "n_obs": 278,
+          "first_date": "1957-01-01",
+          "last_date": "2026-04-01"
+        },
+        "FI__cpi.csv": {
+          "provider": "eu_hicp",
+          "rid": "FI",
+          "description": "HICP all-items, Finland, monthly index (Eurostat)",
+          "n_obs": 360,
+          "first_date": "1996-01-01",
+          "last_date": "2025-12-01"
+        }
+      }
+    },
+    "Greece": {
+      "vintage": "2026-08-12T21:04:07+00:00",
+      "series": {
+        "GR__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "EL",
+          "description": "Real GDP (chain-linked vol., SA), Greece, quarterly (Eurostat)",
+          "n_obs": 125,
+          "first_date": "1995-01-01",
+          "last_date": "2026-01-01"
+        },
+        "GR__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01GRQ661N",
+          "description": "Share prices, Greece, quarterly index (nominal, FRED)",
+          "n_obs": 166,
+          "first_date": "1985-01-01",
+          "last_date": "2026-04-01"
+        },
+        "GR__cpi.csv": {
+          "provider": "eu_hicp",
+          "rid": "EL",
+          "description": "HICP all-items, Greece, monthly index (Eurostat)",
+          "n_obs": 360,
+          "first_date": "1996-01-01",
+          "last_date": "2025-12-01"
+        }
+      }
+    },
+    "Ireland": {
+      "vintage": "2026-08-12T21:04:07+00:00",
+      "series": {
+        "IE__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "IE",
+          "description": "Real GDP (chain-linked vol., SA), Ireland, quarterly (Eurostat)",
+          "n_obs": 126,
+          "first_date": "1995-01-01",
+          "last_date": "2026-04-01"
+        },
+        "IE__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01IEQ661N",
+          "description": "Share prices, Ireland, quarterly index (nominal, FRED)",
+          "n_obs": 286,
+          "first_date": "1955-01-01",
+          "last_date": "2026-04-01"
+        },
+        "IE__cpi.csv": {
+          "provider": "eu_hicp",
+          "rid": "IE",
+          "description": "HICP all-items, Ireland, monthly index (Eurostat)",
+          "n_obs": 360,
+          "first_date": "1996-01-01",
+          "last_date": "2025-12-01"
+        }
+      }
+    },
+    "Italy": {
+      "vintage": "2026-08-12T21:04:07+00:00",
+      "series": {
+        "IT__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "IT",
+          "description": "Real GDP (chain-linked vol., SA), Italy, quarterly (Eurostat)",
+          "n_obs": 122,
+          "first_date": "1996-01-01",
+          "last_date": "2026-04-01"
+        },
+        "IT__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01ITQ661N",
+          "description": "Share prices, Italy, quarterly index (nominal, FRED)",
+          "n_obs": 278,
+          "first_date": "1957-01-01",
+          "last_date": "2026-04-01"
+        },
+        "IT__cpi.csv": {
+          "provider": "eu_hicp",
+          "rid": "IT",
+          "description": "HICP all-items, Italy, monthly index (Eurostat)",
+          "n_obs": 360,
+          "first_date": "1996-01-01",
+          "last_date": "2025-12-01"
+        }
+      }
+    },
+    "Luxembourg": {
+      "vintage": "2026-08-12T21:04:07+00:00",
+      "series": {
+        "LU__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "LU",
+          "description": "Real GDP (chain-linked vol., SA), Luxembourg, quarterly (Eurostat)",
+          "n_obs": 125,
+          "first_date": "1995-01-01",
+          "last_date": "2026-01-01"
+        },
+        "LU__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01LUQ661N",
+          "description": "Share prices, Luxembourg, quarterly index (nominal, FRED)",
+          "n_obs": 110,
+          "first_date": "1999-01-01",
+          "last_date": "2026-04-01"
+        },
+        "LU__cpi.csv": {
+          "provider": "eu_hicp",
+          "rid": "LU",
+          "description": "HICP all-items, Luxembourg, monthly index (Eurostat)",
+          "n_obs": 360,
+          "first_date": "1996-01-01",
+          "last_date": "2025-12-01"
+        }
+      }
+    },
+    "Netherlands": {
+      "vintage": "2026-08-12T21:04:07+00:00",
+      "series": {
+        "NL__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "NL",
+          "description": "Real GDP (chain-linked vol., SA), Netherlands, quarterly (Eurostat)",
+          "n_obs": 122,
+          "first_date": "1996-01-01",
+          "last_date": "2026-04-01"
+        },
+        "NL__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01NLQ661N",
+          "description": "Share prices, Netherlands, quarterly index (nominal, FRED)",
+          "n_obs": 278,
+          "first_date": "1957-01-01",
+          "last_date": "2026-04-01"
+        },
+        "NL__cpi.csv": {
+          "provider": "eu_hicp",
+          "rid": "NL",
+          "description": "HICP all-items, Netherlands, monthly index (Eurostat)",
+          "n_obs": 360,
+          "first_date": "1996-01-01",
+          "last_date": "2025-12-01"
+        }
+      }
+    },
+    "Portugal": {
+      "vintage": "2026-08-12T21:04:07+00:00",
+      "series": {
+        "PT__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "PT",
+          "description": "Real GDP (chain-linked vol., SA), Portugal, quarterly (Eurostat)",
+          "n_obs": 125,
+          "first_date": "1995-01-01",
+          "last_date": "2026-01-01"
+        },
+        "PT__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01PTQ661N",
+          "description": "Share prices, Portugal, quarterly index (nominal, FRED)",
+          "n_obs": 154,
+          "first_date": "1988-01-01",
+          "last_date": "2026-04-01"
+        },
+        "PT__cpi.csv": {
+          "provider": "eu_hicp",
+          "rid": "PT",
+          "description": "HICP all-items, Portugal, monthly index (Eurostat)",
+          "n_obs": 360,
+          "first_date": "1996-01-01",
+          "last_date": "2025-12-01"
+        }
+      }
+    },
+    "Slovak Republic": {
+      "vintage": "2026-08-12T21:04:07+00:00",
+      "series": {
+        "SK__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "SK",
+          "description": "Real GDP (chain-linked vol., SA), Slovak Republic, quarterly (Eurostat)",
+          "n_obs": 125,
+          "first_date": "1995-01-01",
+          "last_date": "2026-01-01"
+        },
+        "SK__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01SKQ661N",
+          "description": "Share prices, Slovak Republic, quarterly index (nominal, FRED)",
+          "n_obs": 131,
+          "first_date": "1993-10-01",
+          "last_date": "2026-04-01"
+        },
+        "SK__cpi.csv": {
+          "provider": "eu_hicp",
+          "rid": "SK",
+          "description": "HICP all-items, Slovak Republic, monthly index (Eurostat)",
+          "n_obs": 360,
+          "first_date": "1996-01-01",
+          "last_date": "2025-12-01"
+        }
+      }
+    },
+    "Slovenia": {
+      "vintage": "2026-08-12T21:04:07+00:00",
+      "series": {
+        "SI__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "SI",
+          "description": "Real GDP (chain-linked vol., SA), Slovenia, quarterly (Eurostat)",
+          "n_obs": 121,
+          "first_date": "1996-01-01",
+          "last_date": "2026-01-01"
+        },
+        "SI__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01SIQ661N",
+          "description": "Share prices, Slovenia, quarterly index (nominal, FRED)",
+          "n_obs": 130,
+          "first_date": "1994-01-01",
+          "last_date": "2026-04-01"
+        },
+        "SI__cpi.csv": {
+          "provider": "eu_hicp",
+          "rid": "SI",
+          "description": "HICP all-items, Slovenia, monthly index (Eurostat)",
+          "n_obs": 360,
+          "first_date": "1996-01-01",
+          "last_date": "2025-12-01"
+        }
+      }
+    },
+    "Spain": {
+      "vintage": "2026-08-12T21:04:07+00:00",
+      "series": {
+        "ES__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "ES",
+          "description": "Real GDP (chain-linked vol., SA), Spain, quarterly (Eurostat)",
+          "n_obs": 126,
+          "first_date": "1995-01-01",
+          "last_date": "2026-04-01"
+        },
+        "ES__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01ESQ661N",
+          "description": "Share prices, Spain, quarterly index (nominal, FRED)",
+          "n_obs": 166,
+          "first_date": "1985-01-01",
+          "last_date": "2026-04-01"
+        },
+        "ES__cpi.csv": {
+          "provider": "eu_hicp",
+          "rid": "ES",
+          "description": "HICP all-items, Spain, monthly index (Eurostat)",
+          "n_obs": 360,
+          "first_date": "1996-01-01",
+          "last_date": "2025-12-01"
+        }
+      }
+    },
+    "Sweden": {
+      "vintage": "2026-08-12T21:04:07+00:00",
+      "series": {
+        "SE__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "SE",
+          "description": "Real GDP (chain-linked vol., SA), Sweden, quarterly (Eurostat)",
+          "n_obs": 134,
+          "first_date": "1993-01-01",
+          "last_date": "2026-04-01"
+        },
+        "SE__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01SEQ661N",
+          "description": "Share prices, Sweden, quarterly index (nominal, FRED)",
+          "n_obs": 306,
+          "first_date": "1950-01-01",
+          "last_date": "2026-04-01"
+        },
+        "SE__cpi.csv": {
+          "provider": "eu_hicp",
+          "rid": "SE",
+          "description": "HICP all-items, Sweden, monthly index (Eurostat)",
+          "n_obs": 360,
+          "first_date": "1996-01-01",
+          "last_date": "2025-12-01"
+        }
+      }
+    },
+    "Iceland": {
+      "vintage": "2026-08-12T21:04:07+00:00",
+      "series": {
+        "IS__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "IS",
+          "description": "Real GDP (chain-linked vol., SA), Iceland, quarterly (Eurostat)",
+          "n_obs": 125,
+          "first_date": "1995-01-01",
+          "last_date": "2026-01-01"
+        },
+        "IS__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01ISQ661N",
+          "description": "Share prices, Iceland, quarterly index (nominal, FRED)",
+          "n_obs": 134,
+          "first_date": "1993-01-01",
+          "last_date": "2026-04-01"
+        },
+        "IS__cpi.csv": {
+          "provider": "eu_hicp",
+          "rid": "IS",
+          "description": "HICP all-items, Iceland, monthly index (Eurostat)",
+          "n_obs": 360,
+          "first_date": "1996-01-01",
+          "last_date": "2025-12-01"
+        }
+      }
+    },
+    "Norway": {
+      "vintage": "2026-08-12T21:04:07+00:00",
+      "series": {
+        "NO__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "NO",
+          "description": "Real GDP (chain-linked vol., SA), Norway, quarterly (Eurostat)",
+          "n_obs": 193,
+          "first_date": "1978-01-01",
+          "last_date": "2026-01-01"
+        },
+        "NO__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01NOQ661N",
+          "description": "Share prices, Norway, quarterly index (nominal, FRED)",
+          "n_obs": 162,
+          "first_date": "1986-01-01",
+          "last_date": "2026-04-01"
+        },
+        "NO__cpi.csv": {
+          "provider": "eu_hicp",
+          "rid": "NO",
+          "description": "HICP all-items, Norway, monthly index (Eurostat)",
+          "n_obs": 360,
+          "first_date": "1996-01-01",
+          "last_date": "2025-12-01"
+        }
+      }
+    },
+    "United Kingdom": {
+      "vintage": "2026-08-12T21:55:23+00:00",
+      "series": {
+        "GB__real_gdp.csv": {
+          "provider": "fred",
+          "rid": "NGDPRSAXDCGBQ",
+          "description": "Real GDP, UK, SA, quarterly (index)",
+          "n_obs": 285,
+          "first_date": "1955-01-01",
+          "last_date": "2026-01-01"
+        },
+        "GB__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01GBQ661N",
+          "description": "Share prices, UK, quarterly index (nominal)",
+          "n_obs": 274,
+          "first_date": "1958-01-01",
+          "last_date": "2026-04-01"
+        },
+        "GB__cpi.csv": {
+          "provider": "ons",
+          "rid": "economy/inflationandpriceindices/timeseries/d7bt/mm23",
+          "description": "CPI all-items index, UK, monthly (ONS D7BT / MM23) \u2014 current",
+          "n_obs": 462,
+          "first_date": "1988-01-01",
+          "last_date": "2026-06-01"
+        }
+      }
+    },
+    "Japan": {
+      "vintage": "2026-08-12T22:06:10+00:00",
+      "series": {
+        "JP__real_gdp.csv": {
+          "provider": "fred",
+          "rid": "NGDPRSAXDCJPQ",
+          "description": "Real GDP, Japan, SA, quarterly (index)",
+          "n_obs": 129,
+          "first_date": "1994-01-01",
+          "last_date": "2026-01-01"
+        },
+        "JP__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01JPQ661N",
+          "description": "Share prices, Japan, quarterly index (nominal)",
+          "n_obs": 270,
+          "first_date": "1959-01-01",
+          "last_date": "2026-04-01"
+        },
+        "JP__cpi.csv": {
+          "provider": "imf_ifs",
+          "rid": "M.JP.PCPI_IX",
+          "description": "CPI all-items index, Japan, monthly (IMF IFS via DBnomics) \u2014 lags ~1yr",
+          "n_obs": 846,
+          "first_date": "1955-01-01",
+          "last_date": "2025-06-01"
+        }
+      }
+    },
+    "Switzerland": {
+      "vintage": "2026-08-12T22:10:54+00:00",
+      "series": {
+        "CH__real_gdp.csv": {
+          "provider": "eu_gdp",
+          "rid": "CH",
+          "description": "Real GDP (chain-linked vol., SA), Switzerland, quarterly (Eurostat)",
+          "n_obs": 125,
+          "first_date": "1995-01-01",
+          "last_date": "2026-01-01"
+        },
+        "CH__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01CHQ661N",
+          "description": "Share prices, Switzerland, quarterly index (nominal)",
+          "n_obs": 286,
+          "first_date": "1955-01-01",
+          "last_date": "2026-04-01"
+        },
+        "CH__cpi.csv": {
+          "provider": "imf_ifs",
+          "rid": "M.CH.PCPI_IX",
+          "description": "CPI all-items index, Switzerland, monthly (IMF IFS via DBnomics) \u2014 lags ~1yr",
+          "n_obs": 847,
+          "first_date": "1955-01-01",
+          "last_date": "2025-07-01"
+        }
+      }
+    },
+    "Korea": {
+      "vintage": "2026-08-12T22:12:34+00:00",
+      "series": {
+        "KR__real_gdp.csv": {
+          "provider": "fred",
+          "rid": "NGDPRSAXDCKRQ",
+          "description": "Real GDP, Korea, SA, quarterly (index)",
+          "n_obs": 266,
+          "first_date": "1960-01-01",
+          "last_date": "2026-04-01"
+        },
+        "KR__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01KRQ661N",
+          "description": "Share prices, Korea, quarterly index (nominal)",
+          "n_obs": 182,
+          "first_date": "1981-01-01",
+          "last_date": "2026-04-01"
+        },
+        "KR__cpi.csv": {
+          "provider": "imf_ifs",
+          "rid": "M.KR.PCPI_IX",
+          "description": "CPI all-items index, Korea, monthly (IMF IFS via DBnomics) \u2014 lags ~1yr",
+          "n_obs": 888,
+          "first_date": "1951-08-01",
+          "last_date": "2025-07-01"
+        }
+      }
+    },
+    "Israel": {
+      "vintage": "2026-08-12T22:15:25+00:00",
+      "series": {
+        "IL__real_gdp.csv": {
+          "provider": "imf_ifs",
+          "rid": "Q.IL.NGDP_R_SA_XDC",
+          "description": "Real GDP SA, Israel, quarterly (IMF IFS via DBnomics)",
+          "n_obs": 121,
+          "first_date": "1995-01-01",
+          "last_date": "2025-01-01"
+        },
+        "IL__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01ILQ661N",
+          "description": "Share prices, Israel, quarterly index (nominal)",
+          "n_obs": 186,
+          "first_date": "1980-01-01",
+          "last_date": "2026-04-01"
+        },
+        "IL__cpi.csv": {
+          "provider": "imf_ifs",
+          "rid": "M.IL.PCPI_IX",
+          "description": "CPI all-items index, Israel, monthly (IMF IFS via DBnomics) \u2014 lags ~1yr",
+          "n_obs": 883,
+          "first_date": "1952-01-01",
+          "last_date": "2025-07-01"
+        }
+      }
+    },
+    "New Zealand": {
+      "vintage": "2026-08-12T22:15:33+00:00",
+      "series": {
+        "NZ__real_gdp.csv": {
+          "provider": "imf_ifs",
+          "rid": "Q.NZ.NGDP_R_SA_XDC",
+          "description": "Real GDP SA, New Zealand, quarterly (IMF IFS via DBnomics)",
+          "n_obs": 152,
+          "first_date": "1987-04-01",
+          "last_date": "2025-01-01"
+        },
+        "NZ__share_prices_nominal.csv": {
+          "provider": "fred",
+          "rid": "SPASTT01NZQ661N",
+          "description": "Share prices, New Zealand, quarterly index (nominal)",
+          "n_obs": 238,
+          "first_date": "1967-01-01",
+          "last_date": "2026-04-01"
+        },
+        "NZ__cpi.csv": {
+          "provider": "imf_ifs",
+          "rid": "Q.NZ.PCPI_IX",
+          "description": "CPI all-items index, New Zealand, quarterly (IMF IFS via DBnomics) \u2014 lags ~1yr",
+          "n_obs": 422,
+          "first_date": "1920-01-01",
+          "last_date": "2025-04-01"
+        }
+      }
+    },
+    "Hong Kong": {
+      "vintage": "2026-08-18T18:03:20+00:00",
+      "series": {
+        "HK__real_gdp.csv": {
+          "provider": "imf_ifs",
+          "rid": "Q.HK.NGDP_R_SA_XDC",
+          "description": "Real GDP SA, Hong Kong, quarterly (IMF IFS via DBnomics)",
+          "n_obs": 141,
+          "first_date": "1990-01-01",
+          "last_date": "2025-01-01"
+        },
+        "HK__share_prices_nominal.csv": {
+          "provider": "imf_ifs",
+          "rid": "Q.HK.FPE_IX",
+          "description": "Share prices, Hong Kong, quarterly index (nominal, IMF IFS FPE_IX \u2014 SPASTT01 proxy)",
+          "n_obs": 118,
+          "first_date": "1996-01-01",
+          "last_date": "2025-04-01"
+        },
+        "HK__cpi.csv": {
+          "provider": "imf_ifs",
+          "rid": "M.HK.PCPI_IX",
+          "description": "CPI all-items index, Hong Kong, monthly (IMF IFS via DBnomics) \u2014 lags ~1yr",
+          "n_obs": 536,
+          "first_date": "1980-10-01",
+          "last_date": "2025-05-01"
+        }
+      }
+    }
+  }
+}
