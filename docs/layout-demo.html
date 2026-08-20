@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Country layout options — demo</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.demo-head{border-bottom:1px solid var(--border);margin:38px 0 18px;padding-bottom:10px}
+.demo-head h2{font-size:19px}
+.demo-head p{color:var(--muted);font-size:13.5px;margin-top:6px;max-width:80ch}
+.demo-head .tag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);display:block;margin-bottom:6px}
+
+/* ---------- B: tile + mini history strip ---------- */
+.tileB .spark{margin-top:12px;display:block;width:100%;height:18px}
+.tileB .asof{position:static;display:block;margin-top:7px;font-family:var(--mono);font-size:10px;color:var(--muted)}
+
+/* ---------- C: tile + bullet meters ---------- */
+.tileC .met{margin-top:11px}
+.tileC .met + .met{margin-top:8px}
+.tileC .mrow{display:flex;justify-content:space-between;align-items:baseline;font-size:11.5px;color:var(--muted)}
+.tileC .mrow b{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--ink);font-weight:600;font-size:12.5px}
+.tileC svg{display:block;width:100%;height:9px;margin-top:4px}
+
+/* ---------- D: table ---------- */
+table.board{width:100%;border-collapse:collapse;font-size:14px}
+table.board thead th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+  font-weight:600;text-align:left;padding:0 12px 9px;border-bottom:1px solid var(--border-strong)}
+table.board thead th.r{text-align:right}
+table.board td{padding:9px 12px;border-bottom:1px solid var(--border)}
+table.board tbody tr{cursor:pointer}
+table.board tbody tr:hover{background:var(--surface-2)}
+table.board td.nm{font-weight:600}
+table.board td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+table.board td.oi{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;font-weight:600}
+table.board td.q{font-family:var(--mono);font-size:11.5px;color:var(--muted);text-align:right}
+table.board .flagdot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ink);
+  margin-left:7px;vertical-align:middle}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="mast">
+    <div class="kicker">Internal demo &middot; not part of the site</div>
+    <h1>Country layout options</h1>
+    <nav class="tabs"><a class="tab active" href="layout-demo.html">Layouts</a><a class="tab" href="index.html">&larr; Back to the board</a></nav>
+  </div>
+
+  <p class="lede" style="margin-top:24px">Same 12 countries in four layouts, on live data — the
+    hottest five plus a spread of calm ones, so you can judge rhythm and density. Everything is
+    monochrome; the only ink weights are text tokens and one data ink.</p>
+
+  <div class="demo-head"><span class="tag">Option A</span><h2>Current — value tile</h2>
+    <p>What the board ships today: name, index, both gaps, quarter. Fastest to scan for the index
+      number; the gap figures are there but read as fine print.</p></div>
+  <div class="grid" id="gridA"></div>
+
+  <div class="demo-head"><span class="tag">Option B</span><h2>Value tile + history strip</h2>
+    <p>Adds a 24-quarter mini history under the numbers — dark cells are quarters with a signal
+      over its threshold. Turns each tile into "where it is <em>and</em> where it has been", and
+      previews the strip on the detail page. Costs about 30px of tile height.</p></div>
+  <div class="grid" id="gridB"></div>
+
+  <div class="demo-head"><span class="tag">Option C</span><h2>Value tile + threshold meters</h2>
+    <p>Each gap becomes a meter drawn on a shared scale: the tick is that signal's threshold, the
+      bar runs from zero to the current gap. Both meters use "multiples of the threshold", so
+      equity and output are directly comparable and you can see how close a calm country is to
+      its bar — the thing the raw percentages hide.</p></div>
+  <div class="grid" id="gridC"></div>
+
+  <div class="demo-head"><span class="tag">Option D</span><h2>Table</h2>
+    <p>One row per country. The densest and the easiest to compare down a column — with 30
+      markets, a table is the classic answer. Sleek in a spreadsheet way rather than a
+      dashboard way, and it loses the card rhythm.</p></div>
+  <table class="board" id="tableD">
+    <thead><tr><th>Market</th><th class="r">Index</th><th class="r">Equity gap</th><th class="r">Output gap</th><th class="r">As of</th></tr></thead>
+    <tbody></tbody>
+  </table>
+
+  <footer style="margin-top:50px"><span>Demo page — delete once a layout is chosen.</span></footer>
+</main>
+
+<script src="index_data.js"></script>
+<script>
+const $=(s,el=document)=>el.querySelector(s);
+const NS="http://www.w3.org/2000/svg";
+const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;};
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const sign=v=>(v>0?"+":"")+v;
+
+/* a representative dozen: the hot ones first, then a spread of calm majors */
+const HOT=DATA.countries.filter(c=>c.latest.oi>0).slice(0,5);
+const CALM=["United States","Germany","Japan","United Kingdom","Australia","Hong Kong","Netherlands"]
+  .map(n=>DATA.countries.find(c=>c.name===n)).filter(Boolean);
+const SHOW=[...HOT,...CALM];
+
+const head=c=>`<div class="top"><span class="nm">${c.name}</span><span class="oi">${c.latest.oi.toFixed(3)}</span></div>`;
+const gaps=c=>`<div class="gaps"><span>equity <b>${sign(c.latest.eq)}%</b></span><span>output <b>${sign(c.latest.gd)}%</b></span></div>`;
+
+/* ---------- A ---------- */
+SHOW.forEach(c=>{
+  const b=document.createElement("button"); b.className="ctile";
+  b.innerHTML=head(c)+gaps(c)+`<span class="asof">${c.latest.q}</span>`;
+  $("#gridA").appendChild(b);
+});
+
+/* ---------- B: 24-quarter mini strip (dark = a signal was over its threshold) ---------- */
+SHOW.forEach(c=>{
+  const b=document.createElement("button"); b.className="ctile tileB";
+  b.innerHTML=head(c)+gaps(c)+`<span class="asof">${c.latest.q}</span>`;
+  const rows=c.oi_hist.slice(-24), n=rows.length, W=200,H=18,g=1.1,cw=W/n;
+  const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,class:"spark",preserveAspectRatio:"none"});
+  rows.forEach((r,i)=>{
+    el("rect",{x:(i*cw).toFixed(2),y:0,width:Math.max(cw-g,.6).toFixed(2),height:H,rx:1,
+      fill:css('--ink'),opacity:r.oi>=0.99?.85:r.oi>0?.45:.11},svg);
+  });
+  b.insertBefore(svg,b.querySelector(".asof"));
+  $("#gridB").appendChild(b);
+});
+
+/* ---------- C: bullet meters, scale = multiples of that signal's threshold ---------- */
+function meter(host,label,gap,thr){
+  const d=document.createElement("div"); d.className="met";
+  d.innerHTML=`<div class="mrow"><span>${label}</span><b>${sign(gap)}%</b></div>`;
+  const W=200,H=9,LO=-2,HI=2, x=v=>(v-LO)/(HI-LO)*W, r=Math.max(LO,Math.min(HI,gap/thr));
+  const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,preserveAspectRatio:"none"});
+  el("rect",{x:0,y:2.5,width:W,height:4,rx:2,fill:css('--ink'),opacity:.09},svg);          /* track */
+  const a=Math.min(x(0),x(r)), w=Math.abs(x(r)-x(0));
+  el("rect",{x:a.toFixed(2),y:1,width:Math.max(w,1.5).toFixed(2),height:7,rx:1.5,
+    fill:css('--ink'),opacity:gap>=thr?.85:.42},svg);                                       /* value */
+  el("line",{x1:x(0),x2:x(0),y1:0,y2:H,stroke:css('--ink'),"stroke-width":1,opacity:.28},svg); /* zero */
+  el("line",{x1:x(1),x2:x(1),y1:0,y2:H,stroke:css('--ink'),"stroke-width":1.6},svg);          /* threshold */
+  d.appendChild(svg); host.appendChild(d);
+}
+SHOW.forEach(c=>{
+  const b=document.createElement("button"); b.className="ctile tileC";
+  b.innerHTML=head(c);
+  meter(b,"equity",c.latest.eq,DATA.thresholds.equity);
+  meter(b,"output",c.latest.gd,DATA.thresholds.gdp);
+  b.insertAdjacentHTML("beforeend",`<span class="asof" style="position:static;display:block;margin-top:9px;font-family:var(--mono);font-size:10px;color:var(--muted)">${c.latest.q}</span>`);
+  $("#gridC").appendChild(b);
+});
+
+/* ---------- D: table ---------- */
+const tb=$("#tableD tbody");
+SHOW.forEach(c=>{
+  const L=c.latest, tr=document.createElement("tr");
+  tr.innerHTML=`<td class="nm">${c.name}</td>
+    <td class="oi">${L.oi.toFixed(3)}</td>
+    <td class="num">${sign(L.eq)}%${L.fe?'<span class="flagdot"></span>':''}</td>
+    <td class="num">${sign(L.gd)}%${L.fg?'<span class="flagdot"></span>':''}</td>
+    <td class="q">${L.q}</td>`;
+  tb.appendChild(tr);
+});
+</script>
+</body>
+</html>

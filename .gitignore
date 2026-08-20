@@ -1,0 +1,17 @@
+# Secrets — never commit (dotfiles are NOT auto-ignored by git)
+.env
+.fred_api_key
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# OS / editor cruft
+.DS_Store
+*.swp
+
+# Third-party source PDFs — linked in references.html, not redistributed
+pdf-sources/

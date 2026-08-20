@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>References — Advanced-Market Overheating Index</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌡️</text></svg>">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="wrap">
+  <div class="mast">
+    <div class="kicker">Financial-cycle early warning &middot; Advanced markets</div>
+    <h1>Advanced-Market Overheating Index</h1>
+    <nav class="tabs">
+      <a class="tab" href="index.html">Board</a>
+      <a class="tab" href="about.html">About</a>
+      <a class="tab" href="methodology.html">Methodology</a>
+      <a class="tab active" href="references.html">References</a>
+    </nav>
+  </div>
+
+  <!-- ===================== REFERENCES ===================== -->
+  <div class="view active" id="refs">
+    <section style="margin-top:26px">
+      <div class="prose">
+        <h2>References</h2>
+
+        <h3>Methodology</h3>
+        <ul class="reflist">
+          <li><span class="who">Chen, S. &amp; Svirydzenka, K. (2021).</span>
+            <span class="what">"Financial Cycles — Early Warning Indicators of Banking Crises?"</span>
+            IMF Working Paper WP/21/116.
+            <span class="note">The method replicated here (Advanced-Market track): indicator selection,
+              frequency bands, thresholds, and index weights.
+              <a href="https://ssrn.com/abstract=3970194">ssrn.com/abstract=3970194</a></span></li>
+        </ul>
+
+        <ul class="reflist">
+          <li><span class="who">Christiano, L. J. &amp; Fitzgerald, T. J. (2003).</span>
+            <span class="what">"The Band Pass Filter."</span>
+            International Economic Review 44(2), 435–465.
+            <span class="note">The filter used for every gap on this page (see About &amp; method).
+              Free working-paper version: NBER WP 7257 (1999),
+              <a href="https://www.nber.org/papers/w7257">nber.org/papers/w7257</a></span></li>
+          <li><span class="who">Harding, D. &amp; Pagan, A. (2002).</span>
+            <span class="what">"Dissecting the Cycle: A Methodological Investigation."</span>
+            Journal of Monetary Economics 49(2), 365–381.
+            <span class="note">Turning-point dating algorithm used to validate cycle lengths.</span></li>
+          <li><span class="who">Claessens, S., Kose, M. A. &amp; Terrones, M. E. (2011, 2012).</span>
+            <span class="what">"Financial Cycles: What? How? When?"</span> IMF WP/11/76;
+            <span class="what">"How Do Business and Financial Cycles Interact?"</span>
+            Journal of International Economics 87(1), 178–190.
+            <span class="note">The specific implementation of Harding–Pagan cycle dating that the
+              methodology follows.
+              <a href="https://www.imf.org/external/pubs/ft/wp/2011/wp1176.pdf">imf.org (WP/11/76)</a></span></li>
+          <li><span class="who">Kaminsky, G., Lizondo, S. &amp; Reinhart, C. (1998).</span>
+            <span class="what">"Leading Indicators of Currency Crises."</span>
+            IMF Staff Papers 45(1).
+            <span class="note">The signal-extraction threshold approach behind the paper's
+              early-warning loss function.</span></li>
+          <li><span class="who">Laeven, L. &amp; Valencia, F. (2018).</span>
+            <span class="what">"Systemic Banking Crises Revisited."</span>
+            IMF Working Paper 18/206.
+              crisis-era markers on each country&#39;s history strip use its published dates
+              (<em>Systemic Banking Crises Database II</em>, IMF Economic Review 68 (2020), 307–361),
+              verified against the latest update — Laeven &amp; Valencia (2026),
+              <em>Systemic Banking Crises Database: 1970–2025</em>, IMF WP/26/94, which extends
+              coverage through 2025, adds no new advanced-market episode, and assesses the
+              March-2023 US/Swiss bank failures as short of its systemic definition
+              (durations capped at 5 years).
+              <a href="https://www.imf.org/en/publications/wp/issues/2026/05/14/systemic-banking-crises-database-1970-2025-576036">imf.org (WP/26/94)</a></span></li>
+              <span class="note">Crisis database with coverage through 2025</span></li>
+        </ul>
+
+        <h3>Software</h3>
+        <ul class="reflist">
+          <li><span class="who">statsmodels</span> — <span class="mono">cffilter</span>
+            (Christiano–Fitzgerald filter), Python.
+            <span class="note">The exact filter implementation run for every gap, including the drift
+              adjustment.
+              <a href="https://www.statsmodels.org/stable/generated/statsmodels.tsa.filters.cf_filter.cffilter.html">statsmodels documentation</a></span></li>
+        </ul>
+
+        <h3>Data providers</h3>
+        <ul class="reflist">
+          <li><span class="who">FRED</span>, Federal Reserve Bank of St. Louis.
+            <span class="note">Share-price indices (OECD Main Economic Indicators) and real GDP
+              (IMF/OECD) for most markets; US CPI (BLS).
+              <a href="https://fred.stlouisfed.org">fred.stlouisfed.org</a></span></li>
+          <li><span class="who">Eurostat.</span>
+            <span class="note">HICP and quarterly national accounts (real GDP) for the EU/EEA bloc
+              and Switzerland. <a href="https://ec.europa.eu/eurostat">ec.europa.eu/eurostat</a></span></li>
+          <li><span class="who">Office for National Statistics (UK).</span>
+            <span class="note">UK CPI all-items index (D7BT, MM23).
+              <a href="https://www.ons.gov.uk">ons.gov.uk</a></span></li>
+          <li><span class="who">Australian Bureau of Statistics.</span>
+            <span class="note">Australian CPI, all groups (ABS Data API).
+              <a href="https://www.abs.gov.au">abs.gov.au</a></span></li>
+          <li><span class="who">Statistics Canada.</span>
+            <span class="note">Canadian CPI, all-items (vector v41690973, table 18-10-0004-01).
+              <a href="https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000401">statcan.gc.ca</a></span></li>
+          <li><span class="who">International Monetary Fund</span> — International Financial
+            Statistics, via DBnomics.
+            <span class="note">CPI (and real GDP where FRED lacks it) for Japan, Switzerland, Korea,
+              Israel, and New Zealand; all three series — share prices (FPE_IX), real GDP, and CPI —
+              for Hong Kong. <a href="https://db.nomics.world">db.nomics.world</a></span></li>
+          <li><span class="who">Bank for International Settlements.</span>
+            <span class="note">Credit and residential-property series (supporting context; underlying
+              provider of several FRED series). <a href="https://www.bis.org">bis.org</a></span></li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</main>
+</body>
+</html>

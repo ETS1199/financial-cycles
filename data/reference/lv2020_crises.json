@@ -1,0 +1,197 @@
+{
+  "source": "Laeven & Valencia systemic banking crises database. Dates parsed from the L&V (2020) supplementary dataset ('Systemic Banking Crises Database II', IMF Economic Review 68, Springer xlsx 41308_2020_107_MOESM1_ESM.xlsx) and verified row-by-row against the 2026 update: Laeven & Valencia (2026), 'Systemic Banking Crises Database: 1970-2025', IMF WP/26/94 (local copy: pdf-sources/Laevene-Valencia.pdf), Table A1 \u2014 all AM episodes unchanged; the 13 new episodes are all EM/LIC, and the March-2023 US/Swiss events are explicitly assessed as not meeting the systemic definition (Section IV.A). Coverage 1970-2025. Flags: 'truncated' = duration capped at 5 years from the first crisis year (fn 5/ in WP/26/94); 'borderline' = borderline cases (fn 6/). Countries absent from this map (Australia, Canada, Hong Kong, New Zealand) have no episode in the database.",
+  "retrieved": "2026-08-18",
+  "crises": {
+    "Austria": [
+      {
+        "start": 2008,
+        "end": 2012,
+        "truncated": true
+      }
+    ],
+    "Belgium": [
+      {
+        "start": 2008,
+        "end": 2012,
+        "truncated": true
+      }
+    ],
+    "Czech Republic": [
+      {
+        "start": 1996,
+        "end": 2000,
+        "truncated": true,
+        "borderline": true
+      }
+    ],
+    "Denmark": [
+      {
+        "start": 2008,
+        "end": 2009
+      }
+    ],
+    "Estonia": [
+      {
+        "start": 1992,
+        "end": 1994
+      }
+    ],
+    "Finland": [
+      {
+        "start": 1991,
+        "end": 1995
+      }
+    ],
+    "France": [
+      {
+        "start": 2008,
+        "end": 2009,
+        "borderline": true
+      }
+    ],
+    "Germany": [
+      {
+        "start": 2008,
+        "end": 2009
+      }
+    ],
+    "Greece": [
+      {
+        "start": 2008,
+        "end": 2012,
+        "truncated": true
+      }
+    ],
+    "Iceland": [
+      {
+        "start": 2008,
+        "end": 2012,
+        "truncated": true
+      }
+    ],
+    "Ireland": [
+      {
+        "start": 2008,
+        "end": 2012,
+        "truncated": true
+      }
+    ],
+    "Israel": [
+      {
+        "start": 1983,
+        "end": 1986
+      }
+    ],
+    "Italy": [
+      {
+        "start": 2008,
+        "end": 2009
+      }
+    ],
+    "Japan": [
+      {
+        "start": 1997,
+        "end": 2001,
+        "truncated": true
+      }
+    ],
+    "Korea": [
+      {
+        "start": 1997,
+        "end": 1998
+      }
+    ],
+    "Luxembourg": [
+      {
+        "start": 2008,
+        "end": 2012,
+        "truncated": true
+      }
+    ],
+    "Netherlands": [
+      {
+        "start": 2008,
+        "end": 2009
+      }
+    ],
+    "Norway": [
+      {
+        "start": 1991,
+        "end": 1993
+      }
+    ],
+    "Portugal": [
+      {
+        "start": 2008,
+        "end": 2012,
+        "truncated": true
+      }
+    ],
+    "Slovak Republic": [
+      {
+        "start": 1998,
+        "end": 2002,
+        "truncated": true
+      }
+    ],
+    "Slovenia": [
+      {
+        "start": 1992,
+        "end": 1992
+      },
+      {
+        "start": 2008,
+        "end": 2012,
+        "truncated": true
+      }
+    ],
+    "Spain": [
+      {
+        "start": 1977,
+        "end": 1981,
+        "truncated": true
+      },
+      {
+        "start": 2008,
+        "end": 2012,
+        "truncated": true
+      }
+    ],
+    "Sweden": [
+      {
+        "start": 1991,
+        "end": 1995
+      },
+      {
+        "start": 2008,
+        "end": 2009,
+        "borderline": true
+      }
+    ],
+    "Switzerland": [
+      {
+        "start": 2008,
+        "end": 2009,
+        "borderline": true
+      }
+    ],
+    "United Kingdom": [
+      {
+        "start": 2007,
+        "end": 2011,
+        "truncated": true
+      }
+    ],
+    "United States": [
+      {
+        "start": 1988,
+        "end": 1988,
+        "borderline": true
+      },
+      {
+        "start": 2007,
+        "end": 2011
+      }
+    ]
+  }
+}
