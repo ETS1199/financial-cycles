@@ -22,13 +22,15 @@ Links marked (bot-403) return 403 to automated checks but resolve fine in a brow
   - Journal DOI: 10.1111/1468-2354.t01-1-00076 (paywalled)
 - **Harding, D. & Pagan, A. (2002). "Dissecting the Cycle: A Methodological
   Investigation." Journal of Monetary Economics 49(2), 365–381.**
-  Turning-point dating algorithm (our validation step).
+  Turning-point dating algorithm the paper uses to derive its Table 2 cycle-length bands.
+  We consume those bands directly and do not run the dating step ourselves.
 - **Claessens, S., Kose, M. A. & Terrones, M. E. — (2011a) "Financial Cycles: What? How?
   When?" IMF WP/11/76; (2011b/2012) "How Do Business and Financial Cycles Interact?"
   Journal of International Economics 87(1), 178–190.**
   The specific BBQ implementation of Harding–Pagan that Chen & Svirydzenka follow for cycle
   dating: run on the log-level, min phase 2 quarters, min complete cycle 5 quarters, with
-  the 2-quarter min-phase waived when a one-quarter asset-price decline exceeds 20%.
+  the 2-quarter min-phase waived when a one-quarter asset-price decline exceeds 20%. Cited
+  for provenance of the Table 2 bands; not implemented here.
   - IMF WP/11/76: https://www.imf.org/external/pubs/ft/wp/2011/wp1176.pdf  (bot-403)
   - JIE 2012 (author copy, readable): https://www.marcoterrones.com/uploads/1/7/6/9/17698985/ckt_2012_how_do_business_and_financial_cycles_interact_jie.pdf
 - **Kaminsky, G., Lizondo, S. & Reinhart, C. (1998). "Leading Indicators of Currency
@@ -50,35 +52,52 @@ Links marked (bot-403) return 403 to automated checks but resolve fine in a brow
 
 ## Data — series used
 
-Fetched and cached by `fetch_data.py` (see `data/raw/manifest.json` for the data vintage).
+`python fetch_data.py --list` prints every configured series for every country (provider,
+remote id, output file, description). That registry is the source of truth; the tables below
+record only what it cannot: **who actually produces the data** behind an aggregator id, and
+the access quirks of each provider.
 
-**FRED (Federal Reserve Bank of St. Louis)** — `https://fred.stlouisfed.org/series/<ID>`:
+Data vintage is pinned per country in `data/raw/manifest.json`.
 
-| Role | FRED ID | Underlying provider |
-|------|---------|---------------------|
-| Real GDP, Canada | NGDPRSAXDCCAQ | OECD / IMF |
-| Share prices, Canada | SPASTT01CAQ661N | OECD Main Economic Indicators |
-| Total credit to private non-fin sector | CRDQCAAPABIS | BIS |
-| Total credit, % of GDP | QCAPAM770A | BIS |
-| Bank credit, % of GDP | QCAPBM770A | BIS |
-| Credit-to-GDP | QCACAM770A | BIS |
-| Real residential property prices | QCAR628BIS | BIS |
-| CPI (cross-check only) | CANCPIALLQINMEI, CANCPIALLMINMEI | OECD |
+**FRED is an aggregator** — cite the underlying producer:
 
-**Statistics Canada** — CPI deflator (the one we actually use):
+| FRED id pattern | Underlying producer |
+|-----------------|---------------------|
+| `SPASTT01*` (share prices) | OECD Main Economic Indicators |
+| `NGDPRSAXDC*` (real GDP) | OECD / IMF |
+| `*BIS`, `Q**M770A` (credit, property) | Bank for International Settlements |
+| `CANCPIALL*` (CPI, cross-check only) | OECD |
+| `CPIAUCSL` (US CPI) | US Bureau of Labor Statistics |
 
-- CPI, all-items, Canada, monthly, 2002=100 — **vector v41690973**, table **18-10-0004-01**.
+**Statistics Canada** — the CPI deflator actually used for Canada:
+
+- CPI, all-items, monthly, 2002=100 — **vector v41690973**, table **18-10-0004-01**.
   - https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1810000401
-  - Pulled via the StatCan Web Data Service (WDS) API.
+  - FRED's Canadian CPI is a rebased copy of this same StatCan data, so we use StatCan
+    wholesale rather than splicing. The FRED `cpi_*` series are cached as a cross-check only.
 
 **Bank of Canada** — official quarterly output gap (Phase-3 cross-check of our filtered GDP
-gap; validation only), via the Valet API `https://www.bankofcanada.ca/valet/observations/<code>/json`:
+gap; validation only), via the Valet API:
 
 | Role | BoC series (Valet code) |
 |------|-------------------------|
 | Output gap — Current MPR | INDINF_OUTGAPMPR_Q |
 | Output gap — Integrated Framework | INDINF_OUTGAPI_Q |
 | Output gap — Extended Multivariate Filter | INDINF_OUTGAPM_Q |
+
+## Data providers & access notes
+
+Equity and real GDP come from FRED where available; CPI comes from a **national or current
+source**, because FRED's OECD CPI lags a year or more. Adapters live in `fetch_data.py`.
+
+| Provider | Serves | Access notes |
+|----------|--------|--------------|
+| **FRED API** (`api.stlouisfed.org`) | equity, GDP, some CPI | Must use the API with a free key — **not** the `fredgraph.csv` chart endpoint, which WAF-blocks datacenter IPs. Key in gitignored `.fred_api_key`. Throttles bursts; a throttled request hangs until timeout. |
+| **Eurostat** (`prc_hicp_midx`, `namq_10_gdp`) | EU/EEA GDP + CPI | Open, no key. One source covers the whole bloc (incl. Switzerland GDP as EFTA). |
+| **ONS** (UK) | UK CPI | Open; `www.ons.gov.uk/…/data`. The old `api.ons.gov.uk` is dead. Current. |
+| **ABS** (Australia) | AU CPI | Open SDMX. Use the version-less key so it resolves to the latest dataflow. Current. |
+| **StatCan** / **Bank of Canada** | CA CPI / output-gap cross-check | Canada only. |
+| **IMF IFS** (via DBnomics) | CPI and GDP for non-EU markets; all three series for Hong Kong | Open, no key; uniform across countries; **lags ~1 year**. Hong Kong equity is `FPE_IX`, a documented proxy for OECD `SPASTT01`. |
 
 ## Data providers (for attribution)
 

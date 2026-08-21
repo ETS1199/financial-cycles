@@ -1,8 +1,8 @@
 # Calculations — AM Overheating Index for Canada
 
-Precise, step-by-step definition of every quantity we compute. Companion to `ROADMAP.md`
-(overview) and `REFRESH.md` (data updates). Method follows Chen & Svirydzenka (2021),
-IMF WP/21/116, Advanced-Market (AM) track.
+Precise, step-by-step definition of every quantity we compute. Method follows Chen &
+Svirydzenka (2021), IMF WP/21/116, Advanced-Market (AM) track. For *why* the method is
+set up this way, see [decisions/](decisions/); for data provenance, see `SOURCES.md`.
 
 ## Notation & inputs
 
@@ -56,9 +56,11 @@ trending / I(1)). Frequency band = the paper's **AM-sample** min/max cycle lengt
 
 (Dashboard series use their own AM bands from Table 2: credit 5–50, property 5–36.)
 
-Harding–Pagan turning-point dating is run on Canada **only to validate** that Canadian
-cycle lengths land near the paper's AM averages; the operative filter band is the AM
-band above, so our gaps stay comparable to the paper's thresholds.
+The paper derives these bands by dating turning points (Harding–Pagan) across its
+advanced-market sample and taking the group mean cycle length ± 2 s.d. — a **single band
+per series for the whole AM group**. Every country covered here is in that group, so the
+band applies by construction and we take it from Table 2 unmodified; that is what keeps our
+gaps comparable to the paper's calibrated thresholds. We do not re-derive it.
 
 ## Step 5 — two-sided vs one-sided (real-time) gaps
 
@@ -78,8 +80,13 @@ for t in range(t0, T):        # t0 = smallest window the CF filter accepts
 ("one-sided" / "two-sided" are the paper's own terms — Chen & Svirydzenka §D.)
 
 The one-sided series is the headline "where are we now" read; two-sided is the cleaner
-hindsight view. The newest quarters of the one-sided series are the least certain and get
-revised as new data arrives (endpoint sensitivity).
+hindsight view.
+
+A one-sided value **never changes** once computed — it depends only on data up to its own
+quarter. What differs is the *hindsight* read of the same quarter: Canada 2024Q3 read +1.1%
+in real time but sits at −5.6% two-sided today. The two converge at the final observation.
+Source-data revisions (agencies restating GDP/CPI) are a separate channel and do move
+values. See [decisions/0004](decisions/0004-one-sided-values-never-move.md).
 
 ## Step 6 — gaps in percent
 
@@ -123,59 +130,6 @@ Possible values: `0` (neither hot), `0.497` (equity only), `0.503` (GDP only),
 
 Weight = 1 − Type I error (missed crises) − Type II error (false alarms).
 
-## Harding–Pagan dating (validation only)
-
-Run on the **log-level** series `f` (i.e. `e`, `g`, `cr`, `pr` from Step 3), following
-Claessens, Kose & Terrones (2011a / 2012) — the "BBQ" implementation of Harding–Pagan
-(2002) that Chen & Svirydzenka's dating step cites.
-
-```
-Peak at t:   (f_t−f_{t−2}>0 and f_t−f_{t−1}>0) and (f_{t+2}−f_t<0 and f_{t+1}−f_t<0)
-Trough at t: mirror image
-```
-
-Censoring (Claessens et al., exact):
-- peaks and troughs must **alternate** — between two adjacent same-type extrema keep the
-  absolute one;
-- each **phase** (peak→trough or trough→peak) lasts **≥ 2 quarters**;
-- each **complete cycle** (trough→peak→trough) lasts **≥ 5 quarters**;
-- **asset-price exception:** the 2-quarter minimum phase is waived when a single-quarter
-  decline exceeds **20%** (can bind for equity and property).
-
-Used to confirm Canadian cycle lengths land near the paper's AM averages — **not** to set
-the filter band (the operative band is the AM band from Table 2, Step 4).
-
-### Cycle amplitude
-
-For each turning point we also report the **amplitude** of the phase ending there — the
-percent level move since the previous turning point (matching the paper's Appendix-2
-"amplitude" column):
-
-```
-amplitude_t = 100 * ( exp(f_t − f_{t−1}) − 1 )      # signed %; + for upswings, − for downswings
-```
-
-### Small-swing diagnostic (ours, not the paper's)
-
-The BBQ rules above are duration-only, so on volatile series (equity most of all) they date
-more — and smaller — cycles than the paper reports for Canada (e.g. equity: our ~19 vs the
-paper's 11 over 1960–2014). To make that transparent **without deviating from the paper**,
-we add a diagnostic flag — it removes nothing, so the dated cycles stay exactly the BBQ
-output. A swing is flagged when its amplitude is small **relative to that series' own
-swings**:
-
-```
-median_abs = median( |amplitude| over all swings in the series )
-small_swing_t = |amplitude_t| < frac * median_abs          # frac = hp_small_swing_frac, default 0.25
-```
-
-A relative (per-series) threshold is used because swing sizes differ by an order of
-magnitude across series (equity swings ~50%, GDP ~2–4%), so no single fixed percent works.
-Flagged rows carry a message like *"Possible small swing: 3.1% move vs series median 14.2%
-(below 0.25×-median flag)."* The flag is configurable (`hp_small_swing_frac`; `None`
-disables) and is **purely informational** — it never changes the turning points, the cycle
-lengths, or anything on the Overheating-Index path.
-
 ## Output-gap cross-check (validation only)
 
 Sanity-check the filtered **GDP gap** against Canada's official output gap. Source (settled
@@ -192,9 +146,8 @@ Amplitudes are comparable (sd ≈ 1.8–2.2). Validation only — off the OI pat
 
 ## Engine design decisions (locked)
 
-Settled before building Phase 2. See also the two method decisions above — one-sided filter
-has **no warm-up** (Step 5) and Harding–Pagan uses the Claessens BBQ censoring (dating
-section).
+Settled before building Phase 2. See also the method decision above — the one-sided filter
+has **no warm-up** (Step 5).
 
 1. **Per-series sample window.** Filter each series over its **own maximal clean sample**
    (real equity is available from ~1956, real GDP from ~1961), not clipped to a common
@@ -215,7 +168,7 @@ section).
 - `country_config` = { share-price id, GDP id, CPI source, credit id, property id } (+ any
   country-specific data quirks). Canada is the first instance.
 - `method_config` is **shared across all AMs**: the AM bands (Step 4), thresholds and
-  weights (Step 7–8), CF `drift=True`, and the Harding–Pagan censoring params.
+  weights (Step 7–8), and CF `drift=True`.
 
 Applying the engine to another advanced market means swapping only `country_config`; the
 shared `method_config` keeps gaps comparable to the paper's thresholds.
@@ -234,12 +187,15 @@ Canada has essentially **no systemic banking crisis** in the Laeven–Valencia d
 - ~~**Output-gap cross-check source:** Bank of Canada vs. IMF WEO~~ — **settled (Phase 3):**
   Bank of Canada quarterly output gap (all three `INDINF_*` measures). See "Output-gap
   cross-check" above.
-- **Dashboard deflation details:** confirm real-credit deflation and any dashboard bands;
-  dashboard extras are directional context only (no paper-calibrated AM threshold).
+- **Dashboard deflation details:** confirm real-credit deflation and any dashboard bands.
+  Dashboard extras stay directional context only — see
+  [decisions/0003](decisions/0003-no-dashboard-thresholds.md).
 
 ## Caveats
 
-- One-sided gaps at the sample edge are uncertain and get revised (see Step 5).
-- GDP is revised for several quarters after release; a near-threshold reading can wobble.
+- A quarter's real-time (one-sided) read can differ from its hindsight (two-sided) read,
+  sometimes in sign — but one-sided values themselves never move (Step 5).
+- GDP is revised for several quarters after release; a near-threshold reading can wobble
+  between refreshes for that reason alone.
 - The composite index date is anchored to the latest GDP quarter (currently 2026Q1),
   even though the equity component runs to 2026Q2 (see Engine design decision 2).

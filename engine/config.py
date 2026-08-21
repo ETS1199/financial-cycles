@@ -49,13 +49,6 @@ class MethodConfig:
     index_components: tuple[str, ...]      # feed the Overheating Index
     dashboard_components: tuple[str, ...]  # context only, no calibrated threshold
     cf_drift: bool = True
-    # Harding-Pagan / BBQ censoring (Claessens et al.; see dating.py)
-    hp_min_phase: int = 2                  # quarters
-    hp_min_cycle: int = 5                  # quarters
-    hp_asset_decline_waiver: float = 0.20  # waive min-phase if a 1-quarter drop > 20%
-    # Small-swing diagnostic (OUR annotation, NOT a censoring rule): flag a swing whose
-    # |amplitude| < frac x that series' median swing. None disables. See CALCULATIONS.md.
-    hp_small_swing_frac: float | None = 0.25
 
 
 @dataclass(frozen=True)

@@ -1,24 +1,16 @@
 #!/usr/bin/env python3
 """Fetch & cache the raw series for the AM financial-cycle overheating analysis.
 
-Multi-country. Each country's series are pulled from the right provider (FRED for the
-market/BIS series; a national source for CPI so the tail stays current), normalized to a
-tidy CSV in data/raw/, and recorded in a manifest that pins the data vintage. The engine
+Multi-country. Each country's series are pulled from a provider and normalized to a
+CSV in data/raw/, and recorded in a manifest that pins the data vintage. The engine
 reads those cached CSVs, so the one-sided real-time filter is reproducible against a fixed
-vintage; re-fetch on a quarterly cadence with --refresh.
+vintage; re-fetch quarterly using --refresh.
 
 Providers:
     fred     FRED API series/observations (api.stlouisfed.org), needs api key -> observation_date,<id>
     statcan  StatCan Web Data Service (WDS), by vector id             -> observation_date,value
     boc      Bank of Canada Valet API, by series code                 -> observation_date,value
     abs      ABS Data API (SDMX), by dataflow/key                     -> observation_date,value
-
-The FRED API (api.stlouisfed.org, 120 req/min) is used, NOT the fredgraph.csv chart endpoint
-(fred.stlouisfed.org) — that one is WAF-protected and blocks this environment's IP. Get a free
-key at https://fred.stlouisfed.org/docs/api/api_key.html and expose it via the FRED_API_KEY env
-var or a ~/.fred_api_key file (see _fred_key). Uses only the standard library. curl (not Python
-sockets) does the egress — this sandbox permits curl but blocks Python's own sockets; --http1.1
-because these hosts misbehave over HTTP/2 here.
 
 Usage:
     python fetch_data.py                       # fetch series not already cached (all countries)
@@ -162,7 +154,12 @@ for _name, _iso, _geo in EU_AM:
 
 def _curl(extra: list[str], what: str) -> str:
     """Run curl with shared flags; return stdout or raise. No --fail, so HTTP-error bodies
-    (e.g. a FRED API 400/429 JSON error) come back for the caller to parse and report."""
+    (e.g. a FRED API 400/429 JSON error) come back for the caller to parse and report.
+
+    curl rather than urllib: this environment permits curl's egress but blocks Python's own
+    sockets. --http1.1 because these hosts misbehave over HTTP/2 here — dropping it shows up
+    as slow stalls and exit-28 timeouts, indistinguishable from FRED throttling.
+    """
     cmd = ["curl", "-s", "--http1.1", "--retry", "2", "--retry-delay", "2",
            "-m", str(TIMEOUT), "-A", UA, *extra]
     proc = subprocess.run(cmd, capture_output=True, text=True)
@@ -173,7 +170,7 @@ def _curl(extra: list[str], what: str) -> str:
 
 def _fred_key() -> str:
     """FRED API key from (in order) FRED_API_KEY env var, project .env / .fred_api_key,
-    or ~/.fred_api_key. Raises if none found. Never printed or committed (.gitignore)."""
+    or ~/.fred_api_key. Raises if none found."""
     k = os.environ.get("FRED_API_KEY")
     if k:
         return k.strip()
