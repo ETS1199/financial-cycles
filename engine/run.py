@@ -1,8 +1,7 @@
 """Run the AM Overheating Index engine for one country.
 
 Wires the pipeline: config -> data prep (Steps 1-3) -> CF filter (Steps 4-5) ->
-gaps / flags / index (Steps 6-8). Harding-Pagan dating (validation only) is a separate,
-not-yet-implemented step and is not required for the index.
+gaps / flags / index (Steps 6-8).
 
     python -m engine.run          # run Canada with the AM method
 
