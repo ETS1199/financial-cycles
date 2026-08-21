@@ -24,22 +24,22 @@
   <div class="view active" id="about">
     <section style="margin-top:26px">
       <div class="prose">
-        <p class="eyebrow">What this measures</p>
-        <h2>Reading a financial cycle before the crisis</h2>
+        <h2>Reading a financial cycle</h2>
         <p>This is the Advanced-Market overheating index from Chen &amp; Svirydzenka's IMF study
           of financial-cycle early-warning indicators. The goal of this papers is to see if an economy's real equity prices
           and its output are far enough above
           their long-run trends to resemble the run-ups that preceded past banking crises.</p>
         <p>The paper uses two metrics for 34 advanced economies: equity prices and output.
-          These were the paper's strongest indicators in the loss function that minimizes missed crises
+          These were the paper's strongest indicators that minimizes missed crises
           and false alarms, outperforming credit-to-GDP and property prices. The index watches
           those two indicators and compares them against thresholds calibrated on historical crises,
           using the Christiano–Fitzgerald filter described in <a href="methodology.html">Methodology</a>.
         </p>
 
         <h3>The two signals</h3>
-        <p class="muted">Each is a percent deviation of the level from its calculated trend.
-           A signal is triggered when the gap exceeds its threshold.</p>
+        <p class="muted">Each signal looks at how far the actual level sits above its calculated trend.
+           One fires when real equity prices are more than 6.7% above their calculated trend, the other when
+           real GDP is more than 1.3% above its calculated trend.</p>
         <table class="defs">
           <thead><tr><th>Signal</th><th>Measures</th><th>Threshold</th></tr></thead>
           <tbody>
@@ -55,7 +55,7 @@
           reliability in the paper. They are near-equal by coincidence, so the value is essentially a
           count of the signals above their thresholds.</p>
 
-        <p>Every gap comes from the Christiano–Fitzgerald
+        <p>Every calculated trend comes from the Christiano–Fitzgerald
           band-pass filter. The full pipeline, from raw data through where the filter bands come
           from to the filter mathematics, is laid out under
           <a href="methodology.html">Methodology</a>.</p>
