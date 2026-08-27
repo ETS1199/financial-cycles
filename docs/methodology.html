@@ -24,173 +24,181 @@
   <div class="view active" id="method">
     <section style="margin-top:26px">
       <div class="prose">
-        <h2>Methodology, beginning to end</h2>
-        <p>Every number on the board is produced by the same pipeline, run country by country.
+        <h2>Methodology</h2>
+        <p>Every number on the board is produced by the same process, run country by country.
           It is a live-data replication of the Advanced-Market track of Chen &amp;
-          Svirydzenka (2021). The steps below outline the process.</p>
+          Svirydzenka (2021). The six steps below run in order.</p>
 
-        <h3>Assemble the series</h3>
-        <p>Each economy contributes three time series: seasonally-adjusted <b>real GDP</b>,
-          <b>share-price index</b>, and <b>CPI</b>. Share prices are deflated by CPI to real equity
-          prices, and monthly CPI is averaged to quarters. We use the natural logarithm of
-          each target series so that their multiplicative growth becomes additive as the
-          Christiano–Fitzgerald filter is a linear operator.</p>
+        <h3>1. Assembling the series</h3>
+        <p>Each economy contributes three series: seasonally-adjusted <b>real GDP</b>, a
+          <b>share-price index</b>, and <b>CPI</b>. Monthly CPI is averaged to quarters, then
+          used to deflate share prices into real equity prices.</p>
 
-        <h3>Where the bands come from</h3>
-        <p>The group averages of these cycle lengths are the paper&#39;s Table&nbsp;1 (mean cycle length and
-          its standard deviation, by series, for the advanced-market group). The paper states that
-          the filter&#39;s cycle-length band is set to that average &plusmn;&nbsp;2 standard deviations, and
-          reports the resulting band directly in Table&nbsp;2, in quarters: equity
-          8&ndash;22, GDP 3&ndash;51. The bands used on this page are taken directly from
-          that table.</p>
+        <h3>2. Removing the drift</h3>
+        <p>Both series grow over the long run, and that steady growth would otherwise be read
+          as part of the cycle. So it comes out first: the average growth per quarter is
+          measured across the whole sample, and the straight line it describes is subtracted,
+          leaving a series that ends at the level it began. Everything after works on
+          that drift-adjusted series.</p>
+        <details class="math">
+          <summary>The drift adjustment</summary>
+          <p>Call the raw log series <i>w</i><sub>t</sub>. Its average growth per quarter,
+            <span class="eq">&mu;&#770;</span>, is read off the two end points, and is then
+            removed cumulatively: nothing at the first observation, one
+            <span class="eq">&mu;&#770;</span> at the second, two at the third, and so on to
+            the end of the sample.</p>
+          <div class="eqbox"><span class="eq">
+            <span>&mu;&#770; <span class="op">=</span> <span class="frac"><span class="fn"><i>w</i><sub>T</sub> &minus; <i>w</i><sub>1</sub></span><span class="fd"><i>T</i> &minus; 1</span></span></span>
+            <span style="margin-left:22px"><i>x</i><sub>t</sub> <span class="op">=</span> <i>w</i><sub>t</sub> &minus; (<i>t</i> &minus; 1)&mu;&#770;</span>
+          </span></div>
+          <p>Behind that estimate is an assumption that the raw series is a random walk
+            with drift, each quarter&#39;s value being the last one plus a fixed step
+            <span class="eq">&mu;</span> plus a zero-mean disturbance
+            <i>u</i><sub>t</sub>.</p>
+          <div class="eqbox"><span class="eq">
+            <span><i>w</i><sub>t</sub> <span class="op">=</span> &mu; <span class="op">+</span>
+              <i>w</i><sub>t&minus;1</sub> <span class="op">+</span> <i>u</i><sub>t</sub></span>
+          </span></div>
+          <p class="muted">Because the series is in logs, the straight line it describes is
+            steady growth. This is Christiano &amp; Fitzgerald&#39;s own drift adjustment, set
+            out in footnote&nbsp;7 on page&nbsp;4 of <em>The Band Pass Filter</em>.</p>
+        </details>
 
-        <h3>How the trend is found using the band-pass filter</h3>
-        <p>Every gap on this page comes from the <b>Christiano–Fitzgerald band-pass
-          filter</b>. Each series is first made real (deflated by CPI) and logged; the filter then
-          splits that log series in two. The <em>cyclical swing</em> is what the band passes
-          through, that is the movement whose period falls inside the band above. Everything else is the
-          <em>slow trend</em>, the drift too slow to fit in the band, along with the wobble too fast
-          for it. That swing, ×100, is the gap, which is read as a percentage
-          deviation from trend. Here is exactly what it computes.</p>
+        <h3>3. Choosing the band</h3>
+        <p>The filter has to be told which cycle lengths to keep. Those bands are taken
+          unchanged from Chen &amp; Svirydzenka (2021): equity
+          <span class="mono">8&ndash;22</span> quarters, GDP <span class="mono">3&ndash;51</span>
+          quarters. A single band covers the whole advanced-market group, so every market on the
+          board is filtered identically. The derivation is in its Tables&nbsp;1 and&nbsp;2 (see
+          <a href="references.html">References</a>).</p>
+        <details class="math">
+          <summary>Converting the band to frequencies</summary>
+          <p>The band is a pair of periods, <i>p</i><sub>l</sub> (shortest) and
+            <i>p</i><sub>u</sub> (longest), in quarters. The filter works in angular
+            frequencies, so they are converted:</p>
+          <div class="eqbox"><span class="eq">
+            <span><i>a</i> <span class="op">=</span> <span class="frac"><span class="fn">2&pi;</span><span class="fd"><i>p</i><sub>u</sub></span></span></span>
+            <span style="margin-left:18px"><i>b</i> <span class="op">=</span> <span class="frac"><span class="fn">2&pi;</span><span class="fd"><i>p</i><sub>l</sub></span></span></span>
+          </span></div>
+        </details>
 
-        <p><b>1. The band.</b> Choose the cycle lengths to keep, periods between
-          pl (shortest) and
-          pu (longest), in quarters and convert them
-          to angular frequencies:</p>
+        <h3>4. Applying the filter</h3>
+        <p>The <b>Christiano&ndash;Fitzgerald band-pass filter</b> separates each series into two
+          parts. The <em>cyclical swing</em> is the movement whose length falls inside the band
+          above. Everything else is the <em>slow trend</em>: drift too slow to fit in the band,
+          along with wobble too fast for it.</p>
+        <p>A trend sits best through a point when the series can be seen on both sides of it,
+          but in real time the future side does not exist yet. So the filter is run in its
+          <em>one-sided</em> form, which uses only the data up to the quarter being measured and
+          leans on an end-weight to stand in for the rest.</p>
+        <details class="math">
+          <summary>The filter weights, and the two-sided and one-sided forms</summary>
+          <p>The filter is a set of weights applied to neighbouring quarters:</p>
+          <div class="eqbox"><span class="eq">
+            <span><i>B</i><sub>0</sub> <span class="op">=</span> <span class="frac"><span class="fn"><i>b</i> &minus; <i>a</i></span><span class="fd">&pi;</span></span></span>
+            <span style="margin-left:18px"><i>B</i><sub>j</sub> <span class="op">=</span> <span class="frac"><span class="fn">sin(<i>jb</i>) &minus; sin(<i>ja</i>)</span><span class="fd">&pi;<i>j</i></span></span></span>
+            <span class="op">,</span><span><i>j</i> &ge; 1</span>
+          </span></div>
+          <p>With hindsight (<em>two-sided</em>), the cycle at quarter
+            <span class="eq"><i>t</i></span> is a weighted sum of the data on <em>both</em>
+            sides of it:</p>
+          <div class="eqbox"><span class="eq">
+            <span>&#375;<sub>t</sub></span> <span class="op">=</span>
+            <span><i>B</i><sub>0</sub><i>x</i><sub>t</sub></span> <span class="op">+</span>
+            <span class="sum">&Sigma;<span class="lim"><span><i>T</i>&minus;1&minus;<i>t</i></span><span><i>j</i>=1</span></span></span>
+            <span><i>B</i><sub>j</sub><i>x</i><sub>t+j</sub></span> <span class="op">+</span>
+            <span><i>B</i>&#771;<sub>T&minus;t</sub><i>x</i><sub>T</sub></span> <span class="op">+</span>
+            <span class="sum">&Sigma;<span class="lim"><span><i>t</i>&minus;2</span><span><i>j</i>=1</span></span></span>
+            <span><i>B</i><sub>j</sub><i>x</i><sub>t&minus;j</sub></span> <span class="op">+</span>
+            <span><i>B</i>&#771;<sub>t&minus;1</sub><i>x</i><sub>1</sub></span>
+          </span></div>
+          <p>The <em>one-sided</em> form is the same filter with the forward terms dropped at
+            the latest quarter <span class="eq"><i>T</i></span>. The weight on the current
+            observation halves and the end-weight takes up the remainder:</p>
+          <div class="eqbox"><span class="eq">
+            <span>&#375;<sub>T</sub></span> <span class="op">=</span>
+            <span><span class="frac"><span class="fn">1</span><span class="fd">2</span></span><i>B</i><sub>0</sub><i>x</i><sub>T</sub></span> <span class="op">+</span>
+            <span class="sum">&Sigma;<span class="lim"><span><i>T</i>&minus;2</span><span><i>j</i>=1</span></span></span>
+            <span><i>B</i><sub>j</sub><i>x</i><sub>T&minus;j</sub></span> <span class="op">+</span>
+            <span><i>B</i>&#771;<sub>T&minus;1</sub><i>x</i><sub>1</sub></span>
+          </span></div>
+          <p>The end-weight <span class="eq"><i>B</i>&#771;</span> is what stands in for the
+            data past the edge of the sample. It is the sum of every weight that would have
+            fallen beyond that edge, applied in a single lump to the boundary observation.
+            Since the full set of weights sums to zero, that leftover tail can be written using
+            only the weights you have:</p>
+          <div class="eqbox"><span class="eq">
+            <span><i>B</i>&#771;<sub>k</sub> <span class="op">=</span>
+              &minus;<span class="frac"><span class="fn">1</span><span class="fd">2</span></span><i>B</i><sub>0</sub>
+              <span class="op">&minus;</span>
+              <span class="sum">&Sigma;<span class="lim"><span><i>k</i>&minus;1</span><span><i>j</i>=1</span></span></span>
+              <i>B</i><sub>j</sub></span>
+          </span></div>
+          <p class="muted">Where <span class="eq"><i>k</i></span> is the boundary
+            observation&#39;s distance in quarters. Christiano &amp; Fitzgerald set this out in
+            footnote&nbsp;3 on page&nbsp;2 of <em>The Band Pass Filter</em>, with the one-sided
+            case <span class="eq"><i>B</i>&#771;<sub>T&minus;1</sub></span> in footnote&nbsp;4
+            on page&nbsp;3.</p>
+        </details>
+
+        <h3>5. The gap</h3>
+        <p>The cyclical swing, multiplied by 100, is the <b>gap</b>: how far a series sits from
+          its own calculated trend, in percent. This is the number plotted on every chart.</p>
         <div class="eqbox"><span class="eq">
-          <span><i>a</i> <span class="op">=</span> <span class="frac"><span class="fn">2&pi;</span><span class="fd"><i>p</i><sub>u</sub></span></span></span>
-          <span style="margin-left:18px"><i>b</i> <span class="op">=</span> <span class="frac"><span class="fn">2&pi;</span><span class="fd"><i>p</i><sub>l</sub></span></span></span>
-        </span></div>
-        <p class="muted">Bands used here: equity <span class="mono">8–22</span> quarters,
-        output <span class="mono">3–51</span> quarters. As previously stated.</p>
-
-        <p><b>2. The weights.</b> The filter is a set of weights applied to neighbouring quarters:</p>
-        <div class="eqbox"><span class="eq">
-          <span><i>B</i><sub>0</sub> <span class="op">=</span> <span class="frac"><span class="fn"><i>b</i> &minus; <i>a</i></span><span class="fd">&pi;</span></span></span>
-          <span style="margin-left:18px"><i>B</i><sub>j</sub> <span class="op">=</span> <span class="frac"><span class="fn">sin(<i>jb</i>) &minus; sin(<i>ja</i>)</span><span class="fd">&pi;<i>j</i></span></span></span>
-          <span class="op">,</span><span><i>j</i> &ge; 1</span>
+          <span>gap<sub>t</sub> <span class="op">=</span> 100 &times; &#375;<sub>t</sub></span>
         </span></div>
 
-        <p><b>3. Two-sided and one-sided.</b> The filter comes in two versions, and the
-          difference between them is whether future data exists yet.
-          With hindsight (<em>two-sided</em>), the cycle at quarter
-          <span class="eq"><i>t</i></span> is a weighted sum of the data on <em>both</em>
-          sides of it. The ideal measurement, since a trend is best placed through a point
-          when you can see the series on either side:</p>
-        <div class="eqbox"><span class="eq">
-          <span>&#375;<sub>t</sub></span> <span class="op">=</span>
-          <span><i>B</i><sub>0</sub><i>x</i><sub>t</sub></span> <span class="op">+</span>
-          <span class="sum">&Sigma;<span class="lim"><span><i>T</i>&minus;1&minus;<i>t</i></span><span><i>j</i>=1</span></span></span>
-          <span><i>B</i><sub>j</sub><i>x</i><sub>t+j</sub></span> <span class="op">+</span>
-          <span><i>B</i>&#771;<sub>T&minus;t</sub><i>x</i><sub>T</sub></span> <span class="op">+</span>
-          <span class="sum">&Sigma;<span class="lim"><span><i>t</i>&minus;2</span><span><i>j</i>=1</span></span></span>
-          <span><i>B</i><sub>j</sub><i>x</i><sub>t&minus;j</sub></span> <span class="op">+</span>
-          <span><i>B</i>&#771;<sub>t&minus;1</sub><i>x</i><sub>1</sub></span>
-        </span></div>
-        <p>However in real time that future data does not exist. The <em>one-sided</em> version
-          is the same filter with the forward terms dropped at the latest quarter
-          <span class="eq"><i>T</i></span>.So the weight on the current observation halves and the
-          end-weight takes up the remainder:</p>
-        <div class="eqbox"><span class="eq">
-          <span>&#375;<sub>T</sub></span> <span class="op">=</span>
-          <span><span class="frac"><span class="fn">1</span><span class="fd">2</span></span><i>B</i><sub>0</sub><i>x</i><sub>T</sub></span> <span class="op">+</span>
-          <span class="sum">&Sigma;<span class="lim"><span><i>T</i>&minus;2</span><span><i>j</i>=1</span></span></span>
-          <span><i>B</i><sub>j</sub><i>x</i><sub>T&minus;j</sub></span> <span class="op">+</span>
-          <span><i>B</i>&#771;<sub>T&minus;1</sub><i>x</i><sub>1</sub></span>
-        </span></div>
-        <p>The end-weights B^~ in both formulas are what stands in
-          for the data past the edge of the sample. Each one is the sum of every weight that would
-          have fallen beyond that edge, applied in a single lump to the boundary observation. Since
-          the full set of weights sums to zero, that leftover tail can be written using only the
-          weights you have:</p>
+        <h3>6. From gap to signal</h3>
+        <p>Each gap is then compared with the threshold the paper calibrated for it: equity
+          +6.7%, output +1.3% giving.</p>
+        <details class="math">
+          <summary>Symbols used above</summary>
+          <table class="vars">
+            <tbody>
+              <tr><td><i>w</i><sub>t</sub></td><td>the log, inflation-adjusted series at quarter <i>t</i> (i.e. log real equity price)</td></tr>
+              <tr><td><i>x</i><sub>t</sub></td><td>the same series with the drift line removed. What is applied to the filter</td></tr>
+              <tr><td>&mu;</td><td>the drift: the series&#39; true average growth per quarter, in log points</td></tr>
+              <tr><td>&mu;&#770;</td><td>the estimate of that drift, read off the first and last observations</td></tr>
+              <tr><td><i>u</i><sub>t</sub></td><td>the zero-mean disturbance in quarter <i>t</i></td></tr>
+              <tr><td><i>t</i>,&nbsp;<i>T</i></td><td>the quarter being evaluated, and the total number of quarters in the sample</td></tr>
+              <tr><td>&#375;<sub>t</sub></td><td>the extracted cyclical component at <i>t</i>, i.e. the gap before &times;100</td></tr>
+              <tr><td><i>p</i><sub>l</sub>,&nbsp;<i>p</i><sub>u</sub></td><td>shortest / longest cycle length kept, in quarters (equity 8 / 22; output 3 / 51)</td></tr>
+              <tr><td><i>a</i>,&nbsp;<i>b</i></td><td>the band edges as angular frequencies</td></tr>
+              <tr><td><i>B</i><sub>0</sub></td><td>filter weight on the quarter being evaluated</td></tr>
+              <tr><td><i>B</i><sub>j</sub></td><td>filter weight on the quarter <i>j</i> steps away</td></tr>
+              <tr><td><i>B</i>&#771;<sub>k</sub></td><td>end-of-sample correction weight on a boundary observation <i>k</i> quarters away</td></tr>
+            </tbody>
+          </table>
+        </details>
 
-        <div class="eqbox"><span class="eq">
-          <span><i>B</i>&#771;<sub>k</sub> <span class="op">=</span>
-            &minus;<span class="frac"><span class="fn">1</span><span class="fd">2</span></span><i>B</i><sub>0</sub>
-            <span class="op">&minus;</span>
-            <span class="sum">&Sigma;<span class="lim"><span><i>k</i>&minus;1</span><span><i>j</i>=1</span></span></span>
-            <i>B</i><sub>j</sub></span>
-        </span></div>
-
-        <p>Where k is the boundary observation's distance in quarters.
-          Christiano &amp; Fitzgerald set this out in footnote 3 on page 2 of
-          <em>The Band Pass Filter</em>, with the one-sided case B_{T-1} in footnote 4 on
-          page 3.</p>
-        <p><b>Which version is used where.</b> Every reading on this site, the board, the charts,
-          and each cell of the quarter-by-quarter strip is the <b>one-sided</b> read for its
-          quarter, the value an observer would have computed at the time, using only the data
-          that existed then.</p>
+        <h3>Which readings the site shows</h3>
+        <p>Every reading on this site is the one-sided read for its quarter: the value an
+          observer would have computed at the time, using only the data that existed then.</p>
         <p>Because each cell uses only the data available in its own quarter, no cell ever
           changes. A new quarter of data adds a cell and leaves the earlier ones untouched.
           The cost of that is the end-weight: standing in for data that had not happened yet
           pulls a real-time reading toward zero, so a boom still building registers milder
           than its full size.</p>
 
-        <p><b>4. Drift, then the gap.</b> The weights above assume the series has no drift, so the
-          drift has to come out before any of it runs. Call the raw log series
-          wt. Its average growth per quarter,
-          <span class="eq">&mu;&#770;</span>, is read off the two end points, and is then removed
-          cumulatively: nothing at the first observation, one
-          <span class="eq">&mu;&#770;</span> at the second, two at the third, and so on to the end
-          of the sample. That is the same as subtracting the straight line through the first and
-          last observations. What is left is the drift-adjusted series
-          xt, the series every formula above actually
-          filters.</p>
-        <div class="eqbox"><span class="eq">
-          <span>&mu;&#770; <span class="op">=</span> <span class="frac"><span class="fn"><i>w</i><sub>T</sub> &minus; <i>w</i><sub>1</sub></span><span class="fd"><i>T</i> &minus; 1</span></span></span>
-          <span style="margin-left:22px"><i>x</i><sub>t</sub> <span class="op">=</span> <i>w</i><sub>t</sub> &minus; (<i>t</i> &minus; 1)&mu;&#770;</span>
-          <span style="margin-left:22px">gap<sub>t</sub> <span class="op">=</span> 100 &times; &#375;<sub>t</sub></span>
-        </span></div>
-        <p>Behind that estimate is an assumption that the raw series is a random walk
-          with drift, each quarter&#39;s value being the last one plus a fixed step
-          <span class="eq">&mu;</span> plus a zero-mean disturbance
-          ut.</p>
-        <div class="eqbox"><span class="eq">
-          <span><i>w</i><sub>t</sub> <span class="op">=</span> &mu; <span class="op">+</span>
-            <i>w</i><sub>t&minus;1</sub> <span class="op">+</span> <i>u</i><sub>t</sub></span>
-        </span></div>
-        <p class="muted">Because the series is in logs, the straight line it
-          describes is steady growth, so removing it leaves a series that ends at the level
-          it began. This is Christiano &amp; Fitzgerald&#39;s own drift adjustment, set out in
-          footnote&nbsp;7 on page&nbsp;4 of <em>The Band Pass Filter</em>.</p>
-
-        <table class="vars">
-          <tbody>
-            <tr><td><i>w</i><sub>t</sub></td><td>the log, inflation-adjusted series at quarter <i>t</i> (i.e. log real equity price)</td></tr>
-            <tr><td><i>x</i><sub>t</sub></td><td>the same series with the drift line removed. What is applied to the filter</td></tr>
-            <tr><td>&mu;,&nbsp;&mu;&#770;</td><td>the drift, average growth per quarter in log points and the average quarterly growth</td></tr>
-            <tr><td><i>u</i><sub>t</sub></td><td>the zero-mean disturbance in quarter <i>t</i></td></tr>
-            <tr><td><i>t</i>,&nbsp;<i>T</i></td><td>the quarter being evaluated, and the total number of quarters in the sample</td></tr>
-            <tr><td>&#375;<sub>t</sub></td><td>the extracted cyclical component at <i>t</i> i.e the gap, before ×100</td></tr>
-            <tr><td><i>p</i><sub>l</sub>,&nbsp;<i>p</i><sub>u</sub></td><td>shortest / longest cycle length kept, in quarters (equity 8 / 22; output 3 / 51)</td></tr>
-            <tr><td><i>a</i>,&nbsp;<i>b</i></td><td>the band edges as angular frequencies</td></tr>
-            <tr><td><i>B</i><sub>0</sub>,&nbsp;<i>B</i><sub>j</sub></td><td>filter weight on the current quarter</td></tr>
-            <tr><td><i>B</i>&#771;<sub>k</sub></td><td>end-of-sample correction weight on a boundary observation <i>k</i> quarters away</td></tr>
-          </tbody>
-        </table>
         <p class="muted" style="font-size:13px">Source: Christiano &amp; Fitzgerald,
           <em>The Band Pass Filter</em>, eqs (1.2)–(1.4); bands and thresholds from Chen &amp;
           Svirydzenka (2021). Full citations under References.</p>
 
         <h3>Limits of the calibration</h3>
-        <p>Everything upstream of the live data such as cycle durations, filter bands, thresholds
-          and weights were determined by the paper&#39;s 1960–2014 sample and is held fixed.
-          That freeze keeps every market comparable against the same
-          crisis-calibrated bar, but it ages its two layers age differently:</p>
-        <ul class="note-list">
-          <li><b>The bands can drift out of date.</b> The filter only
-            extracts swings inside the band; if advanced-market cycles have lengthened since
-            2014, a boom building more slowly
-            than 22 quarters would be absorbed into &quot;trend&quot; and the equity gap would
-            understate it. A bias toward missed warnings rather than false alarms.</li>
+        <p>The cycle durations, filter bands, thresholds
+          and weights have been determined by the paper&#39;s 1960–2014 sample and is held
+          fixed. That freeze keeps every market comparable against the same crisis-calibrated
+          bar.</p>
+        <p><b>The bands can drift out of date.</b> The filter only
+          extracts swings inside the band; if advanced-market cycles have lengthened since
+          2014, a boom building more slowly
+          than 22 quarters would be absorbed into &quot;trend&quot; and the equity gap would
+          understate it. A bias toward missed warnings rather than false alarms.</p>
 
-            <li><b>The thresholds cannot be re-checked.</b> The <span class="mono">+6.7%</span> /
-            <span class="mono">+1.3%</span> bars minimize missed crises versus false alarms over
-            a small set of historical episodes with no new advanced-market
-            systemic banking crisis to test against. Verified through 2025: the
-            crisis database (see <a href="references.html">References</a>) adds no
-            new advanced-market episodes.</li>
-        </ul>
+        <p><b>The thresholds cannot be re-checked.</b> The <span class="mono">+6.7%</span> /
+          <span class="mono">+1.3%</span> bars minimize missed crises versus false alarms over
+          a small set of historical episodes with no new advanced-market
+          systemic banking crisis to test against. (see <a href="references.html">References</a>)</p>
         <p>Treat a threshold crossing as a prompt to investigate the economy further and weigh persistent deviations more heavily than a single reading.</p>
       </div>
       <footer>

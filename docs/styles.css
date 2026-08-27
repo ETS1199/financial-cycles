@@ -125,6 +125,20 @@ table.vars td:first-child{font-family:Georgia,serif;font-style:italic;white-spac
   padding-right:24px;color:var(--ink)}
 table.vars td:last-child{color:var(--muted)}
 table.vars sub{font-style:italic}
+/* collapsible math */
+details.math{border:1px solid var(--border);border-radius:5px;margin:16px 0}
+details.math>summary{cursor:pointer;list-style:none;padding:10px 14px;font-family:var(--mono);
+  font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+details.math>summary::-webkit-details-marker{display:none}
+details.math>summary::before{content:"+";display:inline-block;width:15px;
+  color:var(--border-strong);font-weight:700}
+details.math[open]>summary::before{content:"\2013"}
+details.math>summary:hover{color:var(--ink)}
+details.math[open]>summary{border-bottom:1px solid var(--border)}
+details.math>*:not(summary){padding-left:14px;padding-right:14px}
+details.math>*:last-child{padding-bottom:4px}
+details.math .eqbox{margin:14px 0}
+details.math table.vars{width:calc(100% - 28px)}
 /* references */
 .reflist{list-style:none;padding:0;margin:14px 0 0;display:flex;flex-direction:column;gap:16px;max-width:78ch}
 .reflist li{padding-left:0;font-size:14.5px;line-height:1.55}
@@ -132,10 +146,6 @@ table.vars sub{font-style:italic}
 .reflist .what{font-style:italic}
 .reflist .note{display:block;color:var(--muted);font-size:13px;margin-top:2px}
 .reflist a{word-break:break-all}
-.note-list{list-style:none;padding:0;margin:12px 0 0;display:flex;flex-direction:column;gap:11px}
-.note-list li{padding-left:18px;position:relative;color:var(--muted);font-size:14px;max-width:76ch}
-.note-list li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;background:var(--border-strong)}
-.note-list b{color:var(--ink)}
 .callout{background:var(--surface-2);border:1px solid var(--border);border-left:3px solid var(--accent);
   border-radius:4px;padding:14px 16px;font-size:13.5px;margin-top:16px;max-width:78ch}
 
